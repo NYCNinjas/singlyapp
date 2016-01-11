@@ -18,5 +18,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.services',
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+    //initializing Parse 
+    Parse.initialize("bHVJOLGWDFkxA5lcCvI9ukloKEctMpDj2vA4jlYM", "u1DwRcLGibs56Dbdd87izneEwjH4qSnSBbd4QUfb");
   });
 })
