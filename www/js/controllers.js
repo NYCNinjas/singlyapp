@@ -12,9 +12,9 @@ angular.module('app.controllers', [])
 
  	  //TODO check that confirmation password match!
 	  var user = new Parse.User();
-	  user.set("username", $scope.user.username);
+	  user.set("name", $scope.user.username);
 	  user.set("password", $scope.user.password);
-	  user.set("email", $scope.user.email);
+	  user.set("username", $scope.user.email);
 	 
 	  user.signUp(null, {
 	    success: function(user) {
@@ -29,7 +29,17 @@ angular.module('app.controllers', [])
 	};
  
   	$scope.loginEmail = function(){
- 
+ 		Parse.User.logIn($scope.user.email, $scope.user.password, {
+    		success: function(user) {
+      		// Do stuff after successful login.
+      		console.log(user);
+      		alert("success!");
+    	},
+    	error: function(user, error) {
+      	// The login failed. Check error to see why.
+      	alert("Error: " + error.code + " " + error.message);
+    	}
+  	  });
   	};
 })
    
