@@ -13,8 +13,12 @@
                         Required!</span>
                 </div> -->
                 <label class="item item-input">
-                    <input type="password" placeholder="Password" name= "password1" ng-model="user.password" required>
+                    <input type="password" placeholder="Password" name= "password1" ng-model="user.password" required required ng-minlength="8">
                 </label>
+            </div> <span class="text-danger col-sm-offset-3" ng-show="myForm.password1.$error.minlength">
+                    Password min length - 8 symbols
+                </span>
+        </div>
                 <label class="item item-input">
                     <input type="password" placeholder="Confirm Password" name = "password2" ng-model="user.conf_password" required equals-to="myForm.password1">
                 </label>
@@ -24,7 +28,7 @@
 
         </div>
             </ion-list>
-            <a id="btn" class="button button-balanced button-block" ng-click="signupEmail()">Sign up</a>
+            <a id="btn" class="button button-balanced button-block" ng-disabled="myForm.$invalid" ng-click="signupEmail()">Sign up</a>
         </form>
     </ion-content>
 </ion-view>
