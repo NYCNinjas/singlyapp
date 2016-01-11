@@ -1,25 +1,30 @@
 <ion-view title="Signup">
     <ion-content overflow-scroll="true" padding="true" scroll="false" class="has-header">
-        <form class="list">
+        <form class="list" name="myForm">
             <ion-list>
                 <label class="item item-input">
-                    <input type="text" placeholder="Name" ng-model="user.username">
+                    <input type="text" placeholder="Name" name = "userName" ng-model="user.username">
                 </label>
                 <label class="item item-input">
-                    <input type="text" placeholder="Email" ng-model="user.email" required>
+                    <input type="text" placeholder="Email" name = "email" ng-model="user.email" required>
                 </label>
                 <!-- <div role="alert">
                     <span class="error" ng-show="myForm.email.$error.required">
                         Required!</span>
                 </div> -->
                 <label class="item item-input">
-                    <input type="password" placeholder="Password" ng-model="user.password" required>
+                    <input type="password" placeholder="Password" name= "password1" ng-model="user.password" required>
                 </label>
                 <label class="item item-input">
-                    <input type="password" placeholder="Confirm Password" ng-model="user.conf_password" required>
+                    <input type="password" placeholder="Confirm Password" name = "password2" ng-model="user.conf_password" required equals-to="myForm.password1">
                 </label>
+                  </div> <span class="text-danger col-sm-offset-3" ng-show="!myForm.password2.$error.required && myForm.password2.$error.equalsTo">
+                    Passwords do not match!
+                </span>
+
+        </div>
             </ion-list>
-            <a class="button button-balanced button-block" ng-click="signupEmail()">Sign up</a>
+            <a id="btn" class="button button-balanced button-block" ng-click="signupEmail()">Sign up</a>
         </form>
     </ion-content>
 </ion-view>
