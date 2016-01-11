@@ -3,16 +3,20 @@
         <form class="list">
             <ion-list>
                 <label class="item item-input">
-                    <input type="text" placeholder="Name" ng-model="data.username">
+                    <input type="text" placeholder="Name" ng-model="user.username">
                 </label>
                 <label class="item item-input">
-                    <input type="text" placeholder="Email" ng-model="data.email">
+                    <input type="text" placeholder="Email" ng-model="user.email" required>
+                </label>
+                <!-- <div role="alert">
+                    <span class="error" ng-show="myForm.email.$error.required">
+                        Required!</span>
+                </div> -->
+                <label class="item item-input">
+                    <input type="password" placeholder="Password" ng-model="user.password" required>
                 </label>
                 <label class="item item-input">
-                    <input type="password" placeholder="Password">
-                </label>
-                <label class="item item-input">
-                    <input type="password" placeholder="Confirm Password" ng-model="data.password">
+                    <input type="password" placeholder="Confirm Password" ng-model="user.conf_password" required>
                 </label>
             </ion-list>
             <a class="button button-balanced button-block" ng-click="signupEmail()">Sign up</a>
