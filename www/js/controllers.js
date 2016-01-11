@@ -20,6 +20,7 @@ angular.module('app.controllers', [])
 	    success: function(user) {
 	      // Hooray! Let them use the app now.
 	      alert("success!");
+	      $state.go("main");
 	    },
 	    error: function(user, error) {
 	      // Show the error message somewhere and let the user try again.
@@ -34,6 +35,7 @@ angular.module('app.controllers', [])
       		// Do stuff after successful login.
       		console.log(user);
       		alert("success!");
+      		$state.go("main");
     	},
     	error: function(user, error) {
       	// The login failed. Check error to see why.
