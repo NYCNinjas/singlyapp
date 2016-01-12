@@ -1,0 +1,19 @@
+<ion-view title="SingSong">
+    <ion-content overflow-scroll="true" padding="true" class="has-header">
+        <form class="list">
+            <ion-list>
+                <label class="item item-input">
+                    <input type="email" placeholder="Email" ng-model="user.email">
+                </label>
+        
+                <label class="item item-input">
+                    <input type="password" placeholder="Password" ng-model="user.password">
+                </label>
+            </ion-list>
+            <a class="button button-balanced button-block button-large" ng-click="loginEmail()">Login</a>
+        </form>
+        
+        <a href="#/page2" class="button button-balanced button-block button-large">Sign Up</a>
+        
+    </ion-content>
+</ion-view>
