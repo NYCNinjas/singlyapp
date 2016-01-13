@@ -34,7 +34,7 @@ angular.module('app.controllers', [])
 	    		}
 	  		});
 	  	}else{
-	  		alert("Please enter valid email address");
+	  		alert("Please enter valid email address"); 
 	  	}
 
 	  }
