@@ -15,18 +15,29 @@ angular.module('app.controllers', [])
 	  user.set("name", $scope.user.username);
 	  user.set("password", $scope.user.password);
 	  user.set("username", $scope.user.email);
-	 
-	  user.signUp(null, {
-	    success: function(user) {
-	      // Hooray! Let them use the app now.
-	      alert("success!");
-	      $state.go("main");
-	    },
-	    error: function(user, error) {
-	      // Show the error message somewhere and let the user try again.
-	      alert("Error: " + error.code + " " + error.message);
-	    }
-	  });
+	  var email_check = $scope.user.email.split("@");
+	  if(email_check.length !== 2){
+	  	alert("Please enter valid email address");
+	  }else{
+	  	var left_side = email_check[0].split(".");
+	  	var right_side = email_check[1].split(".");
+	  	if(right_side.length === 2 && (left_side.length === 2 || left_side.length === 1)){
+	  		user.signUp(null, {
+	    		success: function(user) {
+	      			// Hooray! Let them use the app now.
+	      			alert("success!");
+	      			$state.go("main");
+	    		},
+	    		error: function(user, error) {
+	      			// Show the error message somewhere and let the user try again.
+	      			alert("Error: " + error.code + " " + error.message);
+	    		}
+	  		});
+	  	}else{
+	  		alert("Please enter valid email address");
+	  	}
+
+	  }
 	};
  
   	$scope.loginEmail = function(){
