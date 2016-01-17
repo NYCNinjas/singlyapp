@@ -56,6 +56,12 @@ angular.module('app.controllers', [])
   	};
 })
    
+
+   .controller('profileCtrl', function($scope) {
+
+})
+
+
 .controller('mainCtrl', function($scope) {
 
 })

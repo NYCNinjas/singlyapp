@@ -27,8 +27,6 @@ angular.module('app.routes', [])
     })
         
       
-    
-      
         
     .state('main', {
       url: '/page3',
@@ -36,7 +34,14 @@ angular.module('app.routes', [])
       controller: 'mainCtrl'
     })
         
-      
+    
+
+    .state('profile', {
+      url: '/page4',
+      templateUrl: 'templates/profile.html',
+      controller: 'profileCtrl'
+    })
+
     ;
 
   // if none of the above states are matched, use this as the fallback
