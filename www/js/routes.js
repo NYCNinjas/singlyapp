@@ -26,16 +26,17 @@ angular.module('app.routes', [])
       controller: 'signupCtrl'
     })
         
-      
-    
-      
-        
     .state('main', {
       url: '/page3',
       templateUrl: 'templates/main.html',
       controller: 'mainCtrl'
     })
-        
+
+    .state('uploads',{
+      url: '/page4',
+      templateUrl: 'templates/upload.html',
+      controller: 'uploadCtrl'
+    })  
       
     ;
 
