@@ -81,14 +81,26 @@ angular.module('app.controllers', [])
 	$scope.song = {};
 
 	$scope.upload = function(){
-		var file = document.getElementById('vidAud').value;
-		if(file.trim().length !== 0){
+
+			//create a new object to be saved as Parse Song 
 			var Songs = Parse.Object.extend("Song");
 			var singsong = new Songs();
-			singsong.set("title",$scope.song.names);
-			singsong.set("user", Parse.User.current());
-			singsong.set("songFile",$("#vidAud").val().split("\\").pop());
-			singsong.save(null,[]);
+
+			//get uploaded file
+			var fileUploadControl = $("#vidAud")[0];
+			//check that file was uploaded successfully 
+			if (fileUploadControl.files.length > 0) {
+				var file = fileUploadControl.files[0];
+				var name = "s_" + $("#vidAud").val().split("\\").pop();
+				//create a Parse file object
+				var parseFile = new Parse.File(name, file);
+
+				singsong.set("songFile",parseFile);
+				singsong.set("title",$scope.song.names);
+				singsong.set("user", Parse.User.current());
+				singsong.save(null,[]);
+			
+			//clean the variables and redirect to main page
 			$("#vidAud").val("");
 			$scope.song.names = "";
 			$state.go('main');
