@@ -65,6 +65,18 @@ angular.module('app.controllers', [])
 
 .controller('mainCtrl', function($scope, $state) {
 
+	var query = new Parse.Query("Song");
+	query.find({
+  		success: function(results) {
+  		console.log("Successfully retrieved " + results.length + " item");
+			$scope.songs = results;
+			console.log($scope.songs[0]);
+  		},
+		error: function(error) {
+		    // error is an instance of Parse.Error.
+		 }
+	});
+	
 	$scope.upload = function(){
 		$state.go('uploads');
 	}

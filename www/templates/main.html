@@ -6,27 +6,14 @@
 <ion-nav-buttons side="left">
         <a class="button button-icon icon ion-upload" ng-click="upload()">Upload</a>
         <button class="button button-icon icon ion-android-exit" ng-click="logout()">Logout</button>
+        <button class="button button-icon icon ion-android-exit" ng-click="loadSongs()">Songs</button>
     </ion-nav-buttons>
-    <!-- <ion-nav-buttons side ="left">
-        <a href="" class="button button-icon icon ion-mic-c" ></a>
-    </ion-nav-buttons> -->
-
     <ion-content overflow-scroll="true" padding="true" class="has-header">
 
-    
-
-        <form class="list">
-            <ion-list>
-            <ion-item class="button-large icon-left ion-ios-play"> Song 1</ion-item>
-            <ion-item class="button-large icon-left ion-ios-play"> Song 2</ion-item>
-            <ion-item class="button-large icon-left ion-ios-play"> Song 3</ion-item>
-            <ion-item class="button-large icon-left ion-ios-play"> Song 4</ion-item>
-            <ion-item class="button-large icon-left ion-ios-play"> Song 5</ion-item>
-            <ion-item class="button-large icon-left ion-ios-play"> Song 6</ion-item>
-            <ion-item class="button-large icon-left ion-ios-play"> Song 7</ion-item>
-            <ion-item class="button-large icon-left ion-ios-play"> Song 8</ion-item>
-            <ion-item class="button-large icon-left ion-ios-play"> Song 9</ion-item>
-        </ion-list>
-        </form>
+    <ion-list>
+        <ion-item ng-repeat="song in songs" class="button-large icon-left ion-ios-play">
+      {{song.attributes.title}}
+    </ion-item>
+  </ion-list>
     </ion-content>
 </ion-view>
