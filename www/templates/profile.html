@@ -5,18 +5,20 @@
     </ion-nav-buttons>
 
     <ion-nav-buttons side ="right">
-        <a href="#/page1" class="button button-icon icon ion-android-walk "></a>
+        <span class="button button-icon icon ion-android-exit ion-android-walk" ng-click="logout()">
+            <a href="" class="button button-icon icon ion-android-exit">Logout</a>
+        </span>
     </ion-nav-buttons>
     
 
     <ion-content overflow-scroll="true" padding="true" class="has-header">
         <button class="button button-balanced button-block ">Message Me! :)</button>
         <button class="button button-assertive button-block ">Block Me! :(</button>
-        <h1>USERNAME</h1>
+        <h1>{{usernames}}</h1>
         <div>
-            <p>Hello my name is
-                <strong>(insert name here)</strong>and I have been using
-                <strong>(insert name of app here)</strong>for 3 months.</p>
+            <p ng-repeat="people in users">Hello my name is
+                <strong>{{people.name | uppercase}}</strong> and I have been using
+                <strong>{{people.appName}}</strong> since {{people.time | date:'MMM dd yyyy':-0500}}.</p>
         </div>
         <ion-list>
             <ion-item>Song1</ion-item>
