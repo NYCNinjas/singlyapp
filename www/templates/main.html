@@ -3,10 +3,13 @@
 	<ion-nav-buttons side ="right">
         <a href="#/page4" class="button button-icon icon ion-ios-contact" ></a>
     </ion-nav-buttons>
-
-    <ion-nav-buttons side ="left">
-        <a href="" class="button button-icon icon ion-mic-c" ></a>
+<ion-nav-buttons side="left">
+        <a class="button button-icon icon ion-upload" ng-click="upload()">Upload</a>
+        <button class="button button-icon icon ion-android-exit" ng-click="logout()">Logout</button>
     </ion-nav-buttons>
+    <!-- <ion-nav-buttons side ="left">
+        <a href="" class="button button-icon icon ion-mic-c" ></a>
+    </ion-nav-buttons> -->
 
     <ion-content overflow-scroll="true" padding="true" class="has-header">
 

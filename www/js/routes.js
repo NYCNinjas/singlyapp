@@ -26,22 +26,24 @@ angular.module('app.routes', [])
       controller: 'signupCtrl'
     })
         
-      
-        
     .state('main', {
       url: '/page3',
       templateUrl: 'templates/main.html',
       controller: 'mainCtrl'
     })
         
-    
-
     .state('profile', {
       url: '/page4',
       templateUrl: 'templates/profile.html',
       controller: 'profileCtrl'
     })
 
+    .state('uploads',{
+      url: '/page4',
+      templateUrl: 'templates/upload.html',
+      controller: 'uploadCtrl'
+    })  
+      
     ;
 
   // if none of the above states are matched, use this as the fallback

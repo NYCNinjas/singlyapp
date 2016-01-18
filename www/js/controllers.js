@@ -45,6 +45,8 @@ angular.module('app.controllers', [])
     		success: function(user) {
       		// Do stuff after successful login.
       		console.log(user);
+      		$scope.user.email = "";
+      		$scope.user.password = "";
       		alert("success!");
       		$state.go("main");
     	},
@@ -55,14 +57,51 @@ angular.module('app.controllers', [])
   	  });
   	};
 })
-   
+
 
    .controller('profileCtrl', function($scope) {
 
 })
 
+.controller('mainCtrl', function($scope, $state) {
 
-.controller('mainCtrl', function($scope) {
+	$scope.upload = function(){
+		$state.go('uploads');
+	}
+	
+	$scope.logout = function(){
+		Parse.User.logOut();
+		$state.go("login");
+	}
+
+})
+
+.controller('uploadCtrl', function($scope, $state) {
+
+	$scope.song = {};
+
+	$scope.upload = function(){
+		var file = document.getElementById('vidAud').value;
+		if(file.trim().length !== 0){
+			var Songs = Parse.Object.extend("Song");
+			var singsong = new Songs();
+			singsong.set("title",$scope.song.names);
+			singsong.set("user", Parse.User.current());
+			singsong.set("songFile",$("#vidAud").val().split("\\").pop());
+			singsong.save(null,[]);
+			$("#vidAud").val("");
+			$scope.song.names = "";
+			$state.go('main');
+		}else{
+			alert("Please select a file to upload");
+		}
+	}
+
+	$scope.goBack = function(){
+		$("#vidAud").val("");
+		$scope.song.names = "";
+		$state.go('main');
+	}
 
 })
  
