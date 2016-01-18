@@ -59,7 +59,20 @@ angular.module('app.controllers', [])
 })
 
 
-   .controller('profileCtrl', function($scope) {
+.controller('profileCtrl', function($scope, $state) {
+
+	$scope.users = [{
+		'name':Parse.User.current().attributes.name,
+		'time': new Date(Parse.User.current().createdAt),
+		'appName':'SingSong'
+	}];
+
+	$scope.usernames = Parse.User.current().attributes.username;
+
+	$scope.logout = function(){
+		Parse.User.logOut();
+		$state.go("login");
+	}
 
 })
 
