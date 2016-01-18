@@ -1,0 +1,17 @@
+<ion-view title="Uploads">
+	<ion-nav-buttons side="left">
+        <a class="button button-icon icon ion-ios-arrow-back" ng-click="goBack()">Back</a>
+    </ion-nav-buttons>
+	<ion-content overflow-scroll="true" padding="true" class="has-header">
+    	<form class="list">
+            <ion-list>
+                <label class="item-input item">
+                    <input type="text" placeholder="Title" ng-model="song.names">
+                </label>
+                <input type="file" id="vidAud" accept="video/*,audio/*">
+            </ion-list>
+            <a class="button button-icon icon ion-mic-c" ng-click="upload()">Upload</a>
+    	</form>
+	</ion-content>
+
+</ion-view>
