@@ -81,9 +81,7 @@ angular.module('app.controllers', [])
 	var query = new Parse.Query("Song");
 	query.find({
   		success: function(results) {
-  		console.log("Successfully retrieved " + results.length + " item");
 			$scope.songs = results;
-			console.log($scope.songs[0]);
   		},
 		error: function(error) {
 		    // error is an instance of Parse.Error.
@@ -97,6 +95,10 @@ angular.module('app.controllers', [])
 	$scope.logout = function(){
 		Parse.User.logOut();
 		$state.go("login");
+	}
+
+	$scope.voteAndComment = function(data){
+		$state.go('vote_comment',{obj: data});
 	}
 
 })
@@ -137,6 +139,48 @@ angular.module('app.controllers', [])
 	$scope.goBack = function(){
 		$("#vidAud").val("");
 		$scope.song.names = "";
+		$state.go('main');
+	}
+
+})
+
+.controller('votecomCtrl', function($scope, $stateParams, $state){
+
+	var querys = new Parse.Query("Song");
+	querys.equalTo("objectId",$stateParams.obj.id);
+	querys.find({
+		success: function(results){
+			$scope.urls = results
+		}
+	});
+
+	var vot = new Parse.Query("Song_Votes");
+	vot.equalTo("song",$stateParams.obj);
+	vot.find({
+		success: function(voteData){
+			$scope.calculate(voteData),
+			$scope.voted = voteData.length
+		}
+	});
+
+	$scope.calculate = function(data){
+		$scope.sum = 0;
+		for(var i=0; i<data.length; i++){
+			$scope.sum = $scope.sum + data[i].attributes.up_down;
+		}
+	}
+
+	$scope.vote = function(vote, songObj){
+		//writing query to cast vote for a selected song
+		var Voting = Parse.Object.extend("Song_Votes");
+		votes = new Voting();
+		votes.set("users",Parse.User.current());
+		votes.set("up_down",vote);
+		votes.set("song",songObj);
+		votes.save(null,[]);
+	}
+
+	$scope.goBack = function(){
 		$state.go('main');
 	}
 

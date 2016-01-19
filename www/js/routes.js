@@ -42,6 +42,15 @@ angular.module('app.routes', [])
       url: '/page4',
       templateUrl: 'templates/upload.html',
       controller: 'uploadCtrl'
+    })
+
+    .state('vote_comment',{
+      url: '/page5',
+      templateUrl: 'templates/vote_comment.html',
+      controller: 'votecomCtrl',
+      params:{
+        obj: null
+      }
     })  
       
     ;

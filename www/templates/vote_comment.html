@@ -1,0 +1,22 @@
+<ion-view title="Vote and Comments">
+	<ion-nav-buttons side="left">
+        <a class="button button-icon icon ion-ios-arrow-back" ng-click="goBack()">Back</a>
+    </ion-nav-buttons>
+
+    <ion-content overflow-scroll="true" padding="true" class="has-header">
+    <ion-list>
+    	<ion-item ng-repeat="song in urls">
+    		<h3>{{song.attributes.title}}</h3>
+    		<audio controls>
+    			<source src="{{song._serverData.songFile}}" type="audio/*,video/*">
+			</audio>
+			<br>
+			<button title="Up Votes" ng-click="vote(1, song)" class="button button-small icon ion-arrow-up-b" id="up"></button>
+			{{sum}}
+			<button title="Down Votes" ng-click="vote(-1,song)" class="button button-small icon ion-arrow-down-b" id="down"></button>
+			<p>Number of people voted {{voted}}</p>
+		</ion-item>
+	</ion-list>
+	</ion-content>
+
+</ion-view>

@@ -18,7 +18,7 @@
         <div>
             <p ng-repeat="people in users">Hello my name is
                 <strong>{{people.name | uppercase}}</strong> and I have been using
-                <strong>{{people.appName}}</strong> since {{people.time | date:'MMM dd yyyy':-0500}}.</p>
+                <strong>{{people.appName}}</strong> since {{people.time | date:'longDate':-0500}}.</p>
         </div>
         <ion-list>
             <ion-item>Song1</ion-item>
