@@ -146,6 +146,7 @@ angular.module('app.controllers', [])
 
 .controller('votecomCtrl', function($scope, $stateParams, $state){
 
+	//querying the songs from the DB
 	var querys = new Parse.Query("Song");
 	querys.equalTo("objectId",$stateParams.obj.id);
 	querys.find({
@@ -154,6 +155,7 @@ angular.module('app.controllers', [])
 		}
 	});
 
+	//querying the votes for the given song from the DB
 	var vot = new Parse.Query("Song_Votes");
 	vot.equalTo("song",$stateParams.obj);
 	vot.find({
@@ -163,6 +165,28 @@ angular.module('app.controllers', [])
 		}
 	});
 
+	//querying the signed in user who has voted for the selected list of songs
+	vot.equalTo("users",Parse.User.current());
+	vot.find({
+		success: function(results){
+			$scope.ui_refactor(results)
+		}
+	});
+
+	//function called with the information of the user and the song s/he voted
+	$scope.ui_refactor = function(results){
+		console.log(results[0]);
+		if(results[0] !== undefined){
+			if(results[0].attributes.up_down === 1){
+				$scope.upVoted = true;
+				$scope.downVoted = false;
+			}else if(results[0].attributes.up_down === -1){
+				$scope.downVoted = true;
+				$scope.upVoted = false;
+			}
+		}
+	}
+
 	$scope.calculate = function(data){
 		$scope.sum = 0;
 		for(var i=0; i<data.length; i++){
@@ -170,14 +194,36 @@ angular.module('app.controllers', [])
 		}
 	}
 
-	$scope.vote = function(vote, songObj){
+	$scope.vote = function(vote){
 		//writing query to cast vote for a selected song
-		var Voting = Parse.Object.extend("Song_Votes");
-		votes = new Voting();
-		votes.set("users",Parse.User.current());
-		votes.set("up_down",vote);
-		votes.set("song",songObj);
-		votes.save(null,[]);
+		if($("#down_"+$stateParams.obj.id).hasClass("disabled") === false && $("#up_"+$stateParams.obj.id).hasClass("disabled") === false){
+			console.log("It comes here");
+			var Voting = Parse.Object.extend("Song_Votes");
+			votes = new Voting();
+			votes.set("users",Parse.User.current());
+			votes.set("up_down",vote);
+			votes.set("song",$stateParams.obj);
+			votes.save(null,[]);
+		}else if(($("#down_"+$stateParams.obj.id).hasClass("disabled") === true && $("#up_"+$stateParams.obj.id).hasClass("disabled") === false) 
+			|| ($("#down_"+$stateParams.obj.id).hasClass("disabled") === false && $("#up_"+$stateParams.obj.id).hasClass("disabled") === true)){
+			var Voting = Parse.Object.extend("Song_Votes");
+			votes = new Parse.Query(Voting);
+			votes.equalTo("users",Parse.User.current());
+			votes.equalTo("song",$stateParams.obj);
+			votes.first({
+				success: function(object){
+					object.set("up_down",vote);
+					object.save();
+				}
+			});
+		}
+		if(vote === 1){
+			$scope.upVoted = true;
+			$scope.downVoted = false;
+		}else if(vote === -1){
+			$scope.downVoted = true;
+			$scope.upVoted = false;
+		}
 	}
 
 	$scope.goBack = function(){
