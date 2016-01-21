@@ -7,9 +7,16 @@
     <ion-list>
     	<ion-item ng-repeat="song in urls">
     		<h3>{{song.attributes.title}}</h3>
-    		<audio controls>
+    		<!-- <audio controls>
     			<source src="{{song._serverData.songFile}}" type="audio/*,video/*">
-			</audio>
+			</audio> -->
+			 <button id="playbtn" type="button" class="btn btn-info btn-lg btn-block" ng-click="playSong({{song._serverData.songFile}})" >
+                Play Audio
+            </button><br/>
+            <button id="playbtn" type="button" class="btn btn-info btn-lg btn-block" ng-click="pauseSong()" >
+                Pause Audio
+            </button><br/>
+
 			<br>
 			<button title="Up Votes" ng-if="upVoted" ng-click="vote(1)" class="disabled button button-small icon ion-arrow-up-b" id="up_{{song.id}}"></button>
 			<button title="Up Votes" ng-if="!upVoted" ng-click="vote(1)" class="button button-small icon ion-arrow-up-b" id="up_{{song.id}}"></button>
