@@ -158,6 +158,7 @@ angular.module('app.controllers', [])
 
 .controller('votecomCtrl', function($scope, $stateParams, $state){
 
+<<<<<<< HEAD
 	$scope.user = {
 		comment : ""
 	};
@@ -171,6 +172,32 @@ angular.module('app.controllers', [])
 			$scope.allComments = results
 		}
 	});
+=======
+	var my_media;
+	// Playing the audio with Cordova Media plugin 
+	$scope.playSong = function(song){
+		if (my_media== null) {
+    		my_media = new Media(song._url, onSuccess, onError);
+    	}
+    	// Play audio
+    	my_media.play();
+	}
+
+	$scope.pauseSong = function(){
+    	// Pause audio
+    	my_media.pause();
+	}
+	// onSuccess Callback
+	function onSuccess() {
+    	console.log("playAudio():Audio Success");
+	}
+
+	// onError Callback
+	function onError(error) {
+    	alert('code: '    + error.code    + '\n' +
+          'message: ' + error.message + '\n');
+	}
+>>>>>>> d5e49dcb312a6a02160e795322c90e0edbe38503
 
 	//querying the songs from the DB
 	var querys = new Parse.Query("Song");
