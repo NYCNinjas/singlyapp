@@ -21,9 +21,9 @@
                 <strong>{{people.appName}}</strong> since {{people.time | date:'longDate':-0500}}.</p>
         </div>
         <ion-list>
-            <ion-item>Song1</ion-item>
-            <ion-item>Song 2</ion-item>
-            <ion-item>Song 3</ion-item>
+            <ion-item ng-repeat="song in mySongs" class="button-large icon-left ion-ios-play">
+            <a ng-click="voteAndComment(song)" style="color: black;background-color: transparent; text-decoration: none;">{{song.attributes.title}}</a>
+        </ion-item>
         </ion-list>
     </ion-content>
 </ion-view>

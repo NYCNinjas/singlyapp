@@ -69,6 +69,18 @@ angular.module('app.controllers', [])
 
 	$scope.usernames = Parse.User.current().attributes.username;
 
+	var querys = new Parse.Query("Song");
+	querys.equalTo("user", Parse.User.current());
+	querys.find({
+		success: function(songs){
+			$scope.mySongs = songs
+		}
+	});
+
+	$scope.voteAndComment = function(data){
+		$state.go('vote_comment',{obj: data});
+	}
+
 	$scope.logout = function(){
 		Parse.User.logOut();
 		$state.go("login");
@@ -146,11 +158,27 @@ angular.module('app.controllers', [])
 
 .controller('votecomCtrl', function($scope, $stateParams, $state){
 
+	$scope.user = {
+		comment : ""
+	};
+
+	var displayComment = new Parse.Query("Comments");
+	displayComment.equalTo("song",$stateParams.obj);
+	displayComment.include("user");
+	displayComment.find({
+		success: function(results){
+			console.log(results),
+			$scope.allComments = results
+		}
+	});
+
 	//querying the songs from the DB
 	var querys = new Parse.Query("Song");
 	querys.equalTo("objectId",$stateParams.obj.id);
 	querys.find({
 		success: function(results){
+			console.log(results[0].attributes.songFile._url),
+			$scope.linking = results[0].attributes.songFile._url,
 			$scope.urls = results
 		}
 	});
@@ -223,6 +251,20 @@ angular.module('app.controllers', [])
 		}else if(vote === -1){
 			$scope.downVoted = true;
 			$scope.upVoted = false;
+		}
+	}
+
+	$scope.submitComment = function(){
+		if($scope.user.comment.trim().length === 0){
+			alert("You cannot submit empty comment");
+		}else{
+			var songComment = Parse.Object.extend("Comments");
+			var commentObj = new songComment();
+			commentObj.set("user",Parse.User.current());
+			commentObj.set("song",$stateParams.obj);
+			commentObj.set("body",$scope.user.comment.trim());
+			commentObj.save(null,[]);
+			$scope.user.comment = "";
 		}
 	}
 
