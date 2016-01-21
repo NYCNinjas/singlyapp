@@ -158,7 +158,6 @@ angular.module('app.controllers', [])
 
 .controller('votecomCtrl', function($scope, $stateParams, $state){
 
-<<<<<<< HEAD
 	$scope.user = {
 		comment : ""
 	};
@@ -172,7 +171,7 @@ angular.module('app.controllers', [])
 			$scope.allComments = results
 		}
 	});
-=======
+
 	var my_media;
 	// Playing the audio with Cordova Media plugin 
 	$scope.playSong = function(song){
@@ -197,7 +196,6 @@ angular.module('app.controllers', [])
     	alert('code: '    + error.code    + '\n' +
           'message: ' + error.message + '\n');
 	}
->>>>>>> d5e49dcb312a6a02160e795322c90e0edbe38503
 
 	//querying the songs from the DB
 	var querys = new Parse.Query("Song");
