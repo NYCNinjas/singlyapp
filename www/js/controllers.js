@@ -78,7 +78,7 @@ angular.module('app.controllers', [])
 	});
 
 	$scope.voteAndComment = function(data){
-		$state.go('vote_comment',{obj: data});
+		$state.go('vote_comment',{obj: data,past:'profile'});
 	}
 
 	$scope.logout = function(){
@@ -110,7 +110,7 @@ angular.module('app.controllers', [])
 	}
 
 	$scope.voteAndComment = function(data){
-		$state.go('vote_comment',{obj: data});
+		$state.go('vote_comment',{obj: data, past:'main'});
 	}
 
 })
@@ -250,13 +250,13 @@ angular.module('app.controllers', [])
 	$scope.vote = function(vote){
 		//writing query to cast vote for a selected song
 		if($("#down_"+$stateParams.obj.id).hasClass("disabled") === false && $("#up_"+$stateParams.obj.id).hasClass("disabled") === false){
-			console.log("It comes here");
 			var Voting = Parse.Object.extend("Song_Votes");
 			votes = new Voting();
 			votes.set("users",Parse.User.current());
 			votes.set("up_down",vote);
 			votes.set("song",$stateParams.obj);
 			votes.save(null,[]);
+			$scope.voted += 1;
 		}else if(($("#down_"+$stateParams.obj.id).hasClass("disabled") === true && $("#up_"+$stateParams.obj.id).hasClass("disabled") === false) 
 			|| ($("#down_"+$stateParams.obj.id).hasClass("disabled") === false && $("#up_"+$stateParams.obj.id).hasClass("disabled") === true)){
 			var Voting = Parse.Object.extend("Song_Votes");
@@ -273,9 +273,11 @@ angular.module('app.controllers', [])
 		if(vote === 1){
 			$scope.upVoted = true;
 			$scope.downVoted = false;
+			$scope.sum += 1; 
 		}else if(vote === -1){
 			$scope.downVoted = true;
 			$scope.upVoted = false;
+			$scope.sum -= 1;
 		}
 	}
 
@@ -290,11 +292,12 @@ angular.module('app.controllers', [])
 			commentObj.set("body",$scope.user.comment.trim());
 			commentObj.save(null,[]);
 			$scope.user.comment = "";
+			$scope.allComments.push(commentObj);
 		}
 	}
 
 	$scope.goBack = function(){
-		$state.go('main');
+		$state.go($stateParams.past);
 	}
 
 })

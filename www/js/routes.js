@@ -49,7 +49,8 @@ angular.module('app.routes', [])
       templateUrl: 'templates/vote_comment.html',
       controller: 'votecomCtrl',
       params:{
-        obj: null
+        obj: null,
+        past: ''
       }
     })  
       

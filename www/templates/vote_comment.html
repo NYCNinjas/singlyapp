@@ -46,7 +46,7 @@
 	</form>
 	<br>
 	<ion-list>
-		<ion-item ng-repeat="comment in allComments">
+		<ion-item ng-repeat="comment in allComments | orderBy: '-createdAt'">
 			<p><b>{{comment.attributes.user.attributes.name}}</b> ({{comment.attributes.user.attributes.username}}) says:</p>
 			<p>Posted {{comment.createdAt | date:'medium':-0500}}</p>
 			<p>{{comment.attributes.body}}</p>
