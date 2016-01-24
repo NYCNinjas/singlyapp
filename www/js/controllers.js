@@ -6,7 +6,9 @@ angular.module('app.controllers', [])
    
 .controller('signupCtrl', function($scope, $state, $ionicHistory) {
 
-	console.log($ionicHistory.clearHistory());
+	$ionicHistory.viewHistory().currentView.canSwipeBack = false;
+	$ionicHistory.clearHistory();
+	console.log($ionicHistory.viewHistory());
 
 	$scope.user = {};
 
@@ -72,8 +74,6 @@ angular.module('app.controllers', [])
 
 .controller('profileCtrl', function($scope, $state, $ionicHistory) {
 
-	//console.log($ionicHistory.clearHistory());
-
 	$scope.users = [{
 		'name':Parse.User.current().attributes.name,
 		'time': new Date(Parse.User.current().createdAt),
@@ -100,14 +100,16 @@ angular.module('app.controllers', [])
 
 	$scope.logout = function(){
 		Parse.User.logOut();
-		$state.go("login");
+		$state.go('login');
 	}
 
 })
 
 .controller('mainCtrl', function($scope, $state, $ionicHistory) {
 
-	console.log($ionicHistory.clearHistory());
+	$ionicHistory.viewHistory().currentView.canSwipeBack = false;
+	$ionicHistory.clearHistory();
+
 
 	var query = new Parse.Query("Song");
 	query.find({
@@ -138,9 +140,7 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('uploadCtrl', function($scope, $state, $ionicHistory) {
-
-	//console.log($ionicHistory.clearHistory());
+.controller('uploadCtrl', function($scope, $state) {
 
 	$scope.song = {};
 
@@ -185,9 +185,7 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('votecomCtrl', function($scope, $stateParams, $state, $ionicHistory){
-
-	//console.log($ionicHistory.clearHistory());
+.controller('votecomCtrl', function($scope, $stateParams, $state){
 
 	$scope.user = {
 		comment : ""
