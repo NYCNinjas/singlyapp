@@ -4,7 +4,10 @@ angular.module('app.controllers', [])
 
 })
    
-.controller('signupCtrl', function($scope, $state) {
+.controller('signupCtrl', function($scope, $state, $ionicHistory) {
+
+	console.log($ionicHistory.clearHistory());
+
 	$scope.user = {};
 
  	$scope.signupEmail = function(){  
@@ -56,10 +59,20 @@ angular.module('app.controllers', [])
     	}
   	  });
   	};
+
+  	$scope.backToLogin = function(){
+  		$state.go("login");
+  	};
+
+  	$scope.signUpPage = function(){
+  		$state.go("signup");
+  	}
 })
 
 
-.controller('profileCtrl', function($scope, $state) {
+.controller('profileCtrl', function($scope, $state, $ionicHistory) {
+
+	//console.log($ionicHistory.clearHistory());
 
 	$scope.users = [{
 		'name':Parse.User.current().attributes.name,
@@ -81,6 +94,10 @@ angular.module('app.controllers', [])
 		$state.go('vote_comment',{obj: data,past:'profile'});
 	}
 
+	$scope.backToMain = function(){
+		$state.go('main');
+	}
+
 	$scope.logout = function(){
 		Parse.User.logOut();
 		$state.go("login");
@@ -88,7 +105,9 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('mainCtrl', function($scope, $state) {
+.controller('mainCtrl', function($scope, $state, $ionicHistory) {
+
+	console.log($ionicHistory.clearHistory());
 
 	var query = new Parse.Query("Song");
 	query.find({
@@ -109,13 +128,19 @@ angular.module('app.controllers', [])
 		$state.go("login");
 	}
 
+	$scope.profilePage = function(){
+		$state.go('profile');
+	}
+
 	$scope.voteAndComment = function(data){
 		$state.go('vote_comment',{obj: data, past:'main'});
 	}
 
 })
 
-.controller('uploadCtrl', function($scope, $state) {
+.controller('uploadCtrl', function($scope, $state, $ionicHistory) {
+
+	//console.log($ionicHistory.clearHistory());
 
 	$scope.song = {};
 
@@ -148,6 +173,10 @@ angular.module('app.controllers', [])
 		}
 	}
 
+	$scope.backToMain = function(){
+		$state.go('main');
+	}
+
 	$scope.goBack = function(){
 		$("#vidAud").val("");
 		$scope.song.names = "";
@@ -156,7 +185,9 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('votecomCtrl', function($scope, $stateParams, $state){
+.controller('votecomCtrl', function($scope, $stateParams, $state, $ionicHistory){
+
+	//console.log($ionicHistory.clearHistory());
 
 	$scope.user = {
 		comment : ""
