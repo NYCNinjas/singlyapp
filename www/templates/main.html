@@ -1,21 +1,19 @@
 <ion-view title="Main">
-
-	<ion-nav-buttons side ="right">
+    <ion-nav-buttons side ="right">
         <a href="#/page4" class="button button-icon icon ion-ios-contact" ></a>
     </ion-nav-buttons>
-<ion-nav-buttons side="left">
+    <ion-nav-buttons side="left">
         <a class="button button-icon icon ion-upload" ng-click="upload()">Upload</a>
-
         <span class="button button-icon icon ion-android-exit ion-android-walk" ng-click="logout()">
         <button class="button button-icon icon ion-android-exit">Logout</button>
         </span>
     </ion-nav-buttons>
-    <ion-content overflow-scroll="true" padding="true" class="has-header">
 
-    <ion-list>
-        <ion-item ng-repeat="song in songs" class="button-large icon-left ion-ios-play">
-      {{song.attributes.title}}
-    </ion-item>
-  </ion-list>
+    <ion-content overflow-scroll="true" padding="true" class="has-header">
+        <ion-refresher pulling-text="Pull to refresh..."on-refresh="refreshSongs()">
+        </ion-refresher>
+        <ion-list>
+            <ion-item ng-repeat="song in songs" class="button-large icon-left ion-ios-play">{{song.attributes.title}}</ion-item>
+        </ion-list>
     </ion-content>
 </ion-view>

@@ -77,18 +77,30 @@ angular.module('app.controllers', [])
 })
 
 .controller('mainCtrl', function($scope, $state) {
+	uploadSongs();
 
-	var query = new Parse.Query("Song");
-	query.find({
-  		success: function(results) {
-  		console.log("Successfully retrieved " + results.length + " item");
-			$scope.songs = results;
-			console.log($scope.songs[0]);
-  		},
-		error: function(error) {
-		    // error is an instance of Parse.Error.
-		 }
-	});
+	$scope.refreshSongs = function() {
+    	uploadSongs();
+  	};
+
+  	function uploadSongs(){
+
+		var query = new Parse.Query("Song");
+		query.find({
+	  		success: function(results) {
+	  		console.log("Successfully retrieved " + results.length + " item");
+				$scope.songs = results;
+				// console.log($scope.songs[0]);
+	  		},
+			error: function(error) {
+			    // error is an instance of Parse.Error.
+			 }
+			
+		});
+       		// Stop the ion-refresher from spinning
+       		$scope.$broadcast('scroll.refreshComplete');
+
+	}
 	
 	$scope.upload = function(){
 		$state.go('uploads');
