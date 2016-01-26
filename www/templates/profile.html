@@ -1,12 +1,12 @@
 <ion-view title="Profile">
 
     <ion-nav-buttons side ="left">
-        <a href="#/page3" class="button button-icon icon ion-android-home" ></a>
+        <a ng-click="backToMain()" class="button button-icon icon ion-android-home" ></a>
     </ion-nav-buttons>
 
     <ion-nav-buttons side ="right">
         <span class="button button-icon icon ion-android-exit ion-android-walk" ng-click="logout()">
-            <a href="" class="button button-icon icon ion-android-exit">Logout</a>
+            <a href="" class="button button-icon icon ion-android-exit"></a>
         </span>
     </ion-nav-buttons>
     
@@ -18,12 +18,12 @@
         <div>
             <p ng-repeat="people in users">Hello my name is
                 <strong>{{people.name | uppercase}}</strong> and I have been using
-                <strong>{{people.appName}}</strong> since {{people.time | date:'MMM dd yyyy':-0500}}.</p>
+                <strong>{{people.appName}}</strong> since {{people.time | date:'longDate':-0500}}.</p>
         </div>
         <ion-list>
-            <ion-item>Song1</ion-item>
-            <ion-item>Song 2</ion-item>
-            <ion-item>Song 3</ion-item>
+            <ion-item ng-repeat="song in mySongs" class="button-large icon-left ion-ios-play">
+            <a ng-click="voteAndComment(song)" style="color: black;background-color: transparent; text-decoration: none;">{{song.attributes.title}}</a>
+        </ion-item>
         </ion-list>
     </ion-content>
 </ion-view>

@@ -1,0 +1,57 @@
+<ion-view title="Vote and Comments">
+	<ion-nav-buttons side="left">
+        <a class="button button-icon icon ion-ios-arrow-back" ng-click="goBack()">Back</a>
+    </ion-nav-buttons>
+
+    <ion-content overflow-scroll="true" padding="true" class="has-header">
+    <ion-list>
+    	<ion-item ng-repeat="song in urls">
+    		<h3>{{song.attributes.title}}</h3>
+    		<!-- <audio controls>
+    			<source src="{{song._serverData.songFile}}" type="audio/*,video/*">
+			</audio> -->
+			 <button id="playbtn" type="button" class="btn btn-info btn-lg btn-block" ng-click="playSong({{song._serverData.songFile}})" >
+                Play Audio
+            </button><br/>
+            <button id="playbtn" type="button" class="btn btn-info btn-lg btn-block" ng-click="pauseSong()" >
+                Pause Audio
+            </button><br/>
+
+			<br>
+			<button title="Up Votes" ng-if="upVoted" ng-click="vote(1)" class="disabled button-balanced button button-small icon ion-arrow-up-b" id="up_{{song.id}}"></button>
+			<button title="Up Votes" ng-if="!upVoted" ng-click="vote(1)" class="button button-balanced button-small icon ion-arrow-up-b" id="up_{{song.id}}"></button>
+			{{sum}}
+			<button title="Down Votes" ng-if="downVoted" ng-click="vote(-1)" class="disabled button-assertive button button-small icon ion-arrow-down-b" id="down_{{song.id}}"></button>
+			<button title="Down Votes" ng-if="!downVoted" ng-click="vote(-1)" class="button button-assertive button-small icon ion-arrow-down-b" id="down_{{song.id}}"></button>
+			<p>Number of people voted {{voted}}</p>
+		</ion-item>
+	</ion-list>
+	<br>
+	<form name="commenting">
+		<ion-list>
+			<ion-item>
+				<label class="item item-input">
+					<textarea type="text" name="com" rows="5" column="10" placeholder="Comment here..." ng-model="user.comment" ng-maxlength="140"></textarea>
+				</label>
+				<br>
+				<div>
+					<p align="right">
+						<b class="button button-royal button-small disabled">{{user.comment.length}}</b>
+						<button title="Submit" ng-click="submitComment()" class="button button-positive button-small button-outline">Submit</button>
+					</p>
+					<span class="error" ng-show="commenting.com.$error.maxlength" stype="color:red">You exceeded the 140 words limit!</span>
+				</div>
+			</ion-item>
+		</ion-list>
+	</form>
+	<br>
+	<ion-list>
+		<ion-item ng-repeat="comment in allComments | orderBy: '-createdAt'">
+			<p><b>{{comment.attributes.user.attributes.name}}</b> ({{comment.attributes.user.attributes.username}}) says:</p>
+			<p>Posted {{comment.createdAt | date:'medium':-0500}}</p>
+			<p>{{comment.attributes.body}}</p>
+		</ion-item>
+	</ion-list>
+	</ion-content>
+
+</ion-view>

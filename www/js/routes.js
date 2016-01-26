@@ -15,6 +15,7 @@ angular.module('app.routes', [])
     // })
         
     .state('login', {
+      cache: false,
       url: '/page1',
       templateUrl: 'templates/login.html',
       controller: 'signupCtrl'
@@ -42,6 +43,16 @@ angular.module('app.routes', [])
       url: '/page4',
       templateUrl: 'templates/upload.html',
       controller: 'uploadCtrl'
+    })
+
+    .state('vote_comment',{
+      url: '/page5',
+      templateUrl: 'templates/vote_comment.html',
+      controller: 'votecomCtrl',
+      params:{
+        obj: null,
+        past: ''
+      }
     })  
       
     ;

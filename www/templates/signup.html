@@ -1,5 +1,5 @@
 <ion-view title="Signup">
-    <ion-content overflow-scroll="true" padding="true" scroll="false" class="has-header">
+    <ion-content overflow-scroll="true" scroll="false" class="has-header">
         <form class="list" name="myForm">
             <ion-list>
                 <label class="item item-input">
@@ -29,6 +29,7 @@
         </div>
             </ion-list>
             <a id="btn" class="button button-balanced button-block" ng-disabled="myForm.$invalid" ng-click="signupEmail()">Sign up</a>
+            <a id="btn" class="button button-assertive button-block" ng-click="backToLogin()">Cancel</a>
         </form>
     </ion-content>
 </ion-view>
