@@ -111,9 +111,9 @@ angular.module('app.controllers', [])
 		var query = new Parse.Query("Song");
 		query.find({
 	  		success: function(results) {
-	  		console.log("Successfully retrieved " + results.length + " item");
+	  			console.log("Successfully retrieved " + results.length + " item");
 				$scope.songs = results;
-        $scope.$apply();
+        		$scope.$apply();
 				// console.log($scope.songs[0]);
 	  		},
   			error: function(error) {
@@ -121,11 +121,11 @@ angular.module('app.controllers', [])
   			 }
 
 	   });
-       		// Stop the ion-refresher from spinning
+       	// Stop the ion-refresher from spinning
    		$scope.$broadcast('scroll.refreshComplete');
-  }
+  	}
 
-  getSongs();
+  	getSongs();
 
 
 	$scope.upload = function(){
