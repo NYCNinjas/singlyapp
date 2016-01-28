@@ -184,19 +184,14 @@ angular.module('app.controllers', [])
 		}
 	}
 
-	$scope.backToMain = function(){
-		$state.go('main');
-	}
-
 	$scope.goBack = function(){
 		$("#vidAud").val("");
 		$scope.song.names = "";
 		$state.go('main');
 	}
-	//----------------------------------------------------------------------------------
-//Timer
+
 	$scope.timer = function(){
-	 	var time = 30;
+	 	var time = 5;
 		var initialOffset = '440';
 		var i = 1
 		var interval = setInterval(function() {
@@ -209,60 +204,63 @@ angular.module('app.controllers', [])
 		}, 1000);
     }
 
-
-//-------------------------------------------------------------------------------
-//Live Record Using Media
-/*
-	$scope.beginRecord=function(){
-    	var src = "myrecording.amr";
-    	var mediaRec = new Media(src,
-    	    // success callback
-    	    function() {
-    	        console.log("recordAudio():Audio Success")
-    	    },
-
-    	    // error callback
-    	    function(err) {
-    	        console.log("recordAudio():Audio Error: "+ err.code)
-    	    }
-    	);
-
-    	// Record audio
-    	mediaRec.startRecord();
-
-    	// Stop recording after 10 seconds
-    	setTimeout(function() {
-    	    mediaRec.stopRecord();
-    	}, 10000);
-	}*/
-//---------------------------------------------------------------------------------
-//Live Record Using Capture
-
-var captureError = function(e) {
-    console.log('captureError' ,e);
-}
-
-var captureSuccess = function(e) {
-    console.log('captureSuccess');console.dir(e);
-    $scope.sound.file = e[0].localURL;
-    $scope.sound.filePath = e[0].fullPath;
-}
+$scope.songFile = null;
 
 $scope.recordd = function() {
-    navigator.device.capture.captureAudio(
-        captureSuccess,captureError,{duration:10});
+    /*navigator.device.capture.captureAudio(
+        captureSuccess,captureError,{duration:10});*/
+	var src = "trial.amr";
+	var mediaRec = new Media(src,
+      // success callback
+      function() {
+          console.log("recordAudio():Audio Success");
+      },
+
+      // error callback
+      function(err) {
+          console.log("recordAudio():Audio Error: "+ err.code);
+      }
+      );
+	alert(mediaRec);
+	mediaRec.startRecord();
+	$scope.timer();
+	setTimeout(function() {
+    	mediaRec.stopRecord();
+    	alert($scope.songFile);
+    	$scope.songFile = mediaRec;
+    	alert(mediaRec+" "+275);
+    	mediaRec.play();
+    }, 5000);
 }
 $scope.playy = function() {
-    if(!$scope.sound.file) {
+    if($scope.songFile === null) {
         navigator.notification.alert("Record a sound first.", null, "Error");
         return;
+    }else{
+    	$scope.songFile.play();
     }
-    var media = new Media($scope.sound.file, function(e) {
-        media.release();
-    }, function(err) {
-        console.log("media err", err);
-    });
-    media.play();
+}
+$scope.uploadVoice = function(){
+	if($scope.songFile === null) {
+        alert("The song selection is empty")
+        return;
+    }else{
+    	var Songs = Parse.Object.extend("Song");
+		var singsong = new Songs();
+		var parseFile = new Parse.File("trial.amr", $scope.songFile);
+		alert(parseFile);
+		singsong.set("songFile",parseFile);
+		alert(parseFile);
+		singsong.set("title",$scope.song.names);
+		alert(parseFile);
+		singsong.set("user", Parse.User.current());
+		alert(parseFile);
+		singsong.save(null,{});
+		alert(parseFile);
+		alert($scope.songFile);
+		$scope.songFile = null;
+		alert($scope.songFile);
+    }
 }
 //----------------------------------------------------------------------------------
 })
