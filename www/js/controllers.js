@@ -193,7 +193,78 @@ angular.module('app.controllers', [])
 		$scope.song.names = "";
 		$state.go('main');
 	}
+	//----------------------------------------------------------------------------------
+//Timer
+	$scope.timer = function(){
+	 	var time = 30;
+		var initialOffset = '440';
+		var i = 1
+		var interval = setInterval(function() {
+    		$('.circle_animation').css('stroke-dashoffset', initialOffset-(i*(initialOffset/time)));
+    		$('h2').text(i);
+    		if (i == time) {
+        		clearInterval(interval);
+    		}
+    		i++;  
+		}, 1000);
+    }
 
+
+//-------------------------------------------------------------------------------
+//Live Record Using Media
+/*
+	$scope.beginRecord=function(){
+    	var src = "myrecording.amr";
+    	var mediaRec = new Media(src,
+    	    // success callback
+    	    function() {
+    	        console.log("recordAudio():Audio Success")
+    	    },
+
+    	    // error callback
+    	    function(err) {
+    	        console.log("recordAudio():Audio Error: "+ err.code)
+    	    }
+    	);
+
+    	// Record audio
+    	mediaRec.startRecord();
+
+    	// Stop recording after 10 seconds
+    	setTimeout(function() {
+    	    mediaRec.stopRecord();
+    	}, 10000);
+	}*/
+//---------------------------------------------------------------------------------
+//Live Record Using Capture
+
+var captureError = function(e) {
+    console.log('captureError' ,e);
+}
+
+var captureSuccess = function(e) {
+    console.log('captureSuccess');console.dir(e);
+    $scope.sound.file = e[0].localURL;
+    $scope.sound.filePath = e[0].fullPath;
+}
+
+$scope.recordd = function() {
+    navigator.device.capture.captureAudio(
+        captureSuccess,captureError,{duration:10});
+}
+$scope.playy = function() {
+    if(!$scope.sound.file) {
+        navigator.notification.alert("Record a sound first.", null, "Error");
+        return;
+    }
+    var media = new Media($scope.sound.file, function(e) {
+        media.release();
+    }, function(err) {
+        console.log("media err", err);
+    });
+    media.play();
+}
+//----------------------------------------------------------------------------------
 })
 
 .controller('votecomCtrl', function($scope, $stateParams, $state){

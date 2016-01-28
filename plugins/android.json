@@ -22,15 +22,17 @@
         "cordova-plugin-inappbrowser": {
             "PACKAGE_NAME": "com.ionicframework.first217185"
         },
-        "cordova-plugin-media": {
+        "me.rahul.plugins.mediapicker": {
             "PACKAGE_NAME": "com.ionicframework.first217185"
         },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.ionicframework.first217185"
         },
         "me.rahul.plugins.mediapicker": {
+        "cordova-plugin-media": {
             "PACKAGE_NAME": "com.ionicframework.first217185"
         }
+    }
     },
     "dependent_plugins": {}
 }
