@@ -11,6 +11,47 @@
                 <input type="file" id="vidAud" accept="audio/*">
             </ion-list>
             <a class="button button-icon icon ion-mic-c" ng-click="upload()">Upload</a>
+
+            <!--__________________Live Record Button that STILL DOESNT FRIGGIN WORK________________________-->
+            <!--<button class="button button-assertive button-block " ng-click="timer()" >Animation</button>-->
+            <button class="button button-assertive button-block " ng-click="recordd()" >Recordd</button> 
+            <button class="button button-assertive button-block " ng-click="playy()" >Playy</button>
+            <button class="button button-assertive button-block " ng-click="uploadVoice()" >Upload Voice</button>
+
+            <!--________________________________TIMER ANIMATION ____________________________________________-->
+             <div class="item html">
+                            <svg width="160" height="160" xmlns="http://www.w3.org/2000/svg">
+                            <g>
+                            <title>Layer 1</title>
+                            <circle id="circle" class="circle_animation" r="45" cy="81" cx="81" stroke-width="20" stroke="#FF0000 " fill="none" value="nothing"/>
+                            </g>
+                            </svg>
+                            </div>
+                            <style>
+                                .item {
+                                    position: relative;
+                                    float: left;
+                                    }
+                                    /* TIMER TEXT
+                                    .item h2 {
+                                        text-align:center;http://celebrity.money/top-100-richest-rappers/
+                                        position: absolute;
+                                        line-height: 125px;
+                                        width: 100%;
+                                    }*/
+                                svg {
+                                    -webkit-transform: rotate(-90deg);
+                                    transform: rotate(-90deg);
+                                }
+                                .circle_animation {
+                                    stroke-dasharray: 440; /* this value is the pixel circumference of the circle */
+                                    stroke-dashoffset: 440;
+                                    transition: all 1s linear;
+                                }
+                            </style>
+
+                            <br>
+            <!--________________________________________________________________________________________________-->
     	</form>
 	</ion-content>
 

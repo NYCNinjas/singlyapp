@@ -111,9 +111,9 @@ angular.module('app.controllers', [])
 		var query = new Parse.Query("Song");
 		query.find({
 	  		success: function(results) {
-	  		console.log("Successfully retrieved " + results.length + " item");
+	  			console.log("Successfully retrieved " + results.length + " item");
 				$scope.songs = results;
-        $scope.$apply();
+        		$scope.$apply();
 				// console.log($scope.songs[0]);
 	  		},
   			error: function(error) {
@@ -121,11 +121,11 @@ angular.module('app.controllers', [])
   			 }
 
 	   });
-       		// Stop the ion-refresher from spinning
+       	// Stop the ion-refresher from spinning
    		$scope.$broadcast('scroll.refreshComplete');
-  }
+  	}
 
-  getSongs();
+  	getSongs();
 
 
 	$scope.upload = function(){
@@ -184,16 +184,85 @@ angular.module('app.controllers', [])
 		}
 	}
 
-	$scope.backToMain = function(){
-		$state.go('main');
-	}
-
 	$scope.goBack = function(){
 		$("#vidAud").val("");
 		$scope.song.names = "";
 		$state.go('main');
 	}
 
+	$scope.timer = function(){
+	 	var time = 5;
+		var initialOffset = '440';
+		var i = 1
+		var interval = setInterval(function() {
+    		$('.circle_animation').css('stroke-dashoffset', initialOffset-(i*(initialOffset/time)));
+    		$('h2').text(i);
+    		if (i == time) {
+        		clearInterval(interval);
+    		}
+    		i++;  
+		}, 1000);
+    }
+
+$scope.songFile = null;
+
+$scope.recordd = function() {
+    /*navigator.device.capture.captureAudio(
+        captureSuccess,captureError,{duration:10});*/
+	var src = "trial.amr";
+	var mediaRec = new Media(src,
+      // success callback
+      function() {
+          console.log("recordAudio():Audio Success");
+      },
+
+      // error callback
+      function(err) {
+          console.log("recordAudio():Audio Error: "+ err.code);
+      }
+      );
+	alert(mediaRec);
+	mediaRec.startRecord();
+	$scope.timer();
+	setTimeout(function() {
+    	mediaRec.stopRecord();
+    	alert($scope.songFile);
+    	$scope.songFile = mediaRec;
+    	alert(mediaRec+" "+275);
+    	mediaRec.play();
+    }, 5000);
+}
+$scope.playy = function() {
+    if($scope.songFile === null) {
+        navigator.notification.alert("Record a sound first.", null, "Error");
+        return;
+    }else{
+    	$scope.songFile.play();
+    }
+}
+$scope.uploadVoice = function(){
+	if($scope.songFile === null) {
+        alert("The song selection is empty")
+        return;
+    }else{
+    	var Songs = Parse.Object.extend("Song");
+		var singsong = new Songs();
+		var parseFile = new Parse.File("trial.amr", $scope.songFile);
+		alert(parseFile);
+		singsong.set("songFile",parseFile);
+		alert(parseFile);
+		singsong.set("title",$scope.song.names);
+		alert(parseFile);
+		singsong.set("user", Parse.User.current());
+		alert(parseFile);
+		singsong.save(null,{});
+		alert(parseFile);
+		alert($scope.songFile);
+		$scope.songFile = null;
+		alert($scope.songFile);
+    }
+}
+//----------------------------------------------------------------------------------
 })
 
 .controller('votecomCtrl', function($scope, $stateParams, $state){

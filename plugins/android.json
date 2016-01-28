@@ -10,25 +10,29 @@
         "com.ionic.keyboard": {
             "PACKAGE_NAME": "com.ionicframework.first217185"
         },
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "com.ionicframework.first217185"
+        },
         "cordova-plugin-device": {
             "PACKAGE_NAME": "com.ionicframework.first217185"
         },
-        "cordova-plugin-console": {
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "com.ionicframework.first217185"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "com.ionicframework.first217185"
+        },
+        "me.rahul.plugins.mediapicker": {
             "PACKAGE_NAME": "com.ionicframework.first217185"
         },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.ionicframework.first217185"
         },
-        "cordova-plugin-media": {
-            "PACKAGE_NAME": "com.ionicframework.first217185"
-        },
         "me.rahul.plugins.mediapicker": {
-            "PACKAGE_NAME": "com.ionicframework.first217185"
-        }
-    },
-    "dependent_plugins": {
-        "cordova-plugin-file": {
+        "cordova-plugin-media": {
             "PACKAGE_NAME": "com.ionicframework.first217185"
         }
     }
+    },
+    "dependent_plugins": {}
 }
