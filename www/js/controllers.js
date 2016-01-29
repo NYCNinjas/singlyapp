@@ -108,7 +108,7 @@ angular.module('app.controllers', [])
 .controller('mainCtrl', function($scope, $state, $ionicHistory) {
 
 	function getSongs(){
-		var query = new Parse.Query("Song");
+		var query = new Parse.Query("Songs");
 		query.find({
 	  		success: function(results) {
 	  			console.log("Successfully retrieved " + results.length + " item");
@@ -209,7 +209,7 @@ $scope.songFile = null;
 $scope.recordd = function() {
     /*navigator.device.capture.captureAudio(
         captureSuccess,captureError,{duration:10});*/
-	var src = "trial.amr";
+	var src = "trial2.amr";
 	var mediaRec = new Media(src,
       // success callback
       function() {
@@ -245,15 +245,15 @@ $scope.uploadVoice = function(){
         alert("The song selection is empty")
         return;
     }else{
-    	var Songs = Parse.Object.extend("Song");
+    	var Songs = Parse.Object.extend("Songs");
 		var singsong = new Songs();
 		var parseFile = new Parse.File("trial.amr", $scope.songFile);
 		alert(parseFile);
-		singsong.set("songFile",parseFile);
-		alert(parseFile);
+		singsong.set("voices",$scope.songFile);
+		alert($scope.songFile);
 		singsong.set("title",$scope.song.names);
 		alert(parseFile);
-		singsong.set("user", Parse.User.current());
+		singsong.set("users", Parse.User.current());
 		alert(parseFile);
 		singsong.save(null,{});
 		alert(parseFile);
@@ -284,8 +284,8 @@ $scope.uploadVoice = function(){
 	var my_media;
 	// Playing the audio with Cordova Media plugin
 	$scope.playSong = function(song){
-		if (my_media== null) {
-    		my_media = new Media(song._url, onSuccess, onError);
+		if (my_media == null) {
+    		my_media = new Media(song.src, onSuccess, onError);
     	}
     	// Play audio
     	my_media.play();
@@ -307,12 +307,12 @@ $scope.uploadVoice = function(){
 	}
 
 	//querying the songs from the DB
-	var querys = new Parse.Query("Song");
+	var querys = new Parse.Query("Songs");
 	querys.equalTo("objectId",$stateParams.obj.id);
 	querys.find({
 		success: function(results){
-			console.log(results[0].attributes.songFile._url),
-			$scope.linking = results[0].attributes.songFile._url,
+			console.log(results[0]),
+			$scope.linking = results[0].attributes.voices.src,
 			$scope.urls = results
 		}
 	});
@@ -406,6 +406,9 @@ $scope.uploadVoice = function(){
 	}
 
 	$scope.goBack = function(){
+		if(my_media !== null){
+			my_media = null;
+		}
 		$state.go($stateParams.past);
 	}
 
