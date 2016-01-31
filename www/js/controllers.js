@@ -167,8 +167,15 @@ angular.module('app.controllers', [])
 			if (fileUploadControl.files.length > 0) {
 				var file = fileUploadControl.files[0];
 				var name = "s_" + $("#vidAud").val().split("\\").pop();
+
 				//create a Parse file object
-				var parseFile = new Parse.File(name, file);
+				//TODO check the filetype! hardcoded for android
+                var parseFile = new Parse.File(name + ".m4a", file, "audio/x-m4a");
+                // on android system file is not instance of File
+                // that's why Parse.File constructor don't read file content
+                if (parseFile._source == null)
+                	parseFile._source = readAsync1(file);
+                console.log(parseFile);
 
 				singsong.set("songFile",parseFile);
 				singsong.set("title",$scope.song.names);
@@ -183,6 +190,39 @@ angular.module('app.controllers', [])
 			alert("Please select a file to upload");
 		}
 	}
+
+	var readAsync1 = function(file, type) {
+	    var promise = new Parse.Promise();
+
+	    if (typeof(FileReader) === "undefined") {
+	      return Parse.Promise.error(new Parse.Error(
+	          Parse.Error.FILE_READ_ERROR,
+	          "Attempted to use a FileReader on an unsupported browser."));
+	    }
+
+	    var reader = new FileReader();
+	    reader.onloadend = function() {
+	      if (reader.readyState !== 2) {
+	        promise.reject(new Parse.Error(
+	            Parse.Error.FILE_READ_ERROR,
+	            "Error reading file."));
+	        return;
+	      }
+
+	      var dataURL = reader.result;
+	      var matches = /^data:([^;]*);base64,(.*)$/.exec(dataURL);
+	      if (!matches) {
+	        promise.reject(new Parse.Error(
+	            Parse.Error.FILE_READ_ERROR,
+	            "Unable to interpret data URL: " + dataURL));
+	        return;
+	      }
+
+	      promise.resolve(matches[2], type || matches[1]);
+	    };
+	    reader.readAsDataURL(file);
+	return promise;
+  };
 
 	$scope.goBack = function(){
 		$("#vidAud").val("");
