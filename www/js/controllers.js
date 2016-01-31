@@ -209,7 +209,7 @@ $scope.songFile = null;
 $scope.recordd = function() {
     /*navigator.device.capture.captureAudio(
         captureSuccess,captureError,{duration:10});*/
-	var src = "trial2.amr";
+	var src = "trial2.wav";
 	var mediaRec = new Media(src,
       // success callback
       function() {
