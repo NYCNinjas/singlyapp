@@ -240,7 +240,7 @@ angular.module('app.controllers', [])
     		if (i == time) {
         		clearInterval(interval);
     		}
-    		i++;  
+    		i++;
 		}, 1000);
     }
 
@@ -249,7 +249,7 @@ $scope.songFile = null;
 $scope.recordd = function() {
     /*navigator.device.capture.captureAudio(
         captureSuccess,captureError,{duration:10});*/
-	var src = "trial.amr";
+	var src = "trial.wav";
 	var mediaRec = new Media(src,
       // success callback
       function() {
@@ -261,14 +261,14 @@ $scope.recordd = function() {
           console.log("recordAudio():Audio Error: "+ err.code);
       }
       );
-	alert(mediaRec);
+	// alert(mediaRec);
 	mediaRec.startRecord();
 	$scope.timer();
 	setTimeout(function() {
     	mediaRec.stopRecord();
     	alert($scope.songFile);
     	$scope.songFile = mediaRec;
-    	alert(mediaRec+" "+275);
+    	// alert(mediaRec+" "+275);
     	mediaRec.play();
     }, 5000);
 }
@@ -285,21 +285,71 @@ $scope.uploadVoice = function(){
         alert("The song selection is empty")
         return;
     }else{
-    	var Songs = Parse.Object.extend("Song");
+  	var Songs = Parse.Object.extend("Song");
 		var singsong = new Songs();
-		var parseFile = new Parse.File("trial.amr", $scope.songFile);
-		alert(parseFile);
-		singsong.set("songFile",parseFile);
-		alert(parseFile);
-		singsong.set("title",$scope.song.names);
-		alert(parseFile);
-		singsong.set("user", Parse.User.current());
-		alert(parseFile);
-		singsong.save(null,{});
-		alert(parseFile);
-		alert($scope.songFile);
-		$scope.songFile = null;
-		alert($scope.songFile);
+
+
+		console.log($scope.songFile);
+
+		    window.requestFileSystem(LocalFileSystem.TEMPORARY, 0, function(fs) {
+		        fs.root.getDirectory(
+		            "",
+		            {
+		                create: false
+		            },
+		            function(dirEntry) {
+		                dirEntry.getFile(
+		                    "trial.wav",
+		                    {
+		                        create: false,
+		                        exclusive: false
+		                    },
+		                    function gotFileEntry(fe) {
+
+														console.log("FOUND FILE URL: " + fe.toURL());
+														$scope.fullSource = fe.toURL();
+
+														singsong.set("title",$scope.song.names);
+
+														singsong.set("users", Parse.User.current());
+														console.log("ORIGINAL FE METADATA" ); console.log(fe.getMetadata);
+
+														fe.file(
+															function(file){
+																console.log("SUCCESS GOT FILE: ");
+																console.log(file);
+
+																var pfile = new Parse.File("uploaded.wav", file);
+																// pfile._source = readAsync1(file);
+
+																console.log("PFILE: " + JSON.stringify(pfile));
+
+																singsong.save(null, {
+																	success: function(singsong){
+																		console.log("saved singsong once...")
+																		singsong.set("title",$scope.song.names);
+																		singsong.set("user", Parse.User.current());
+																		singsong.set("songFile", pfile);
+																		singsong.save();
+																	}
+																});
+
+															},
+															function(err){
+																console.log(err);
+															});
+		                    },
+		                    function(error) {
+	                        console.log("Error getting file");
+		                    }
+		                );
+		            }
+		        );
+		    },
+		    function() {
+	        console.log("Error requesting filesystem");
+		    });
+
     }
 }
 //----------------------------------------------------------------------------------
