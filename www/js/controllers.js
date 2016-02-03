@@ -12,6 +12,10 @@ angular.module('app.controllers', [])
 
 	$scope.user = {};
 
+	if(localStorage.getItem("token") !== null && localStorage.getItem("token") !== ""){
+		$state.go("main");
+	}
+
  	$scope.signupEmail = function(){
  	  //Create a new user on Parse
 
@@ -31,6 +35,9 @@ angular.module('app.controllers', [])
 	    		success: function(user) {
 	      			// Hooray! Let them use the app now.
 	      			alert("success!");
+	      			localStorage.setItem("token",user._sessionToken);
+      				console.log(localStorage.getItem("token"));
+	      			$scope.signedIn = true;
 	      			$state.go("main");
 	    		},
 	    		error: function(user, error) {
@@ -53,6 +60,9 @@ angular.module('app.controllers', [])
       		$scope.user.email = "";
       		$scope.user.password = "";
       		alert("success!");
+      		localStorage.setItem("token",user._sessionToken);
+      		console.log(localStorage.getItem("token"));
+      		$scope.signedIn = true;
       		$state.go("main");
     	},
     	error: function(user, error) {
@@ -99,6 +109,7 @@ angular.module('app.controllers', [])
 	}
 
 	$scope.logout = function(){
+		localStorage.setItem("token","");
 		Parse.User.logOut();
 		$state.go('login');
 	}
